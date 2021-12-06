@@ -20,7 +20,7 @@
     <table>
         <tr>
             <td>Number</td>
-            <td>{{ number }}</td>
+            <td><h2>{{ number }}</h2></td>
         </tr>
         <tr>
             <td>Category</td>
@@ -32,7 +32,9 @@
         </tr>
         <tr>
             <td>Question</td>
-            <td>{{ question }}</td>
+            {% autoescape false %}
+            <td><h2>{{ question }}</h2></td>
+            {% endautoescape %}
         </tr>
         <tr>
             <td>Value</td>

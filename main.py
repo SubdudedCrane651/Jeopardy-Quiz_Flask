@@ -3,6 +3,7 @@ import json
 import random
 import pandas as pd
 from flask import Flask, request,render_template
+from flask import escape
 app = Flask('app')
 
 #The Jeopardy JSON file at my personal website
@@ -33,12 +34,14 @@ def index():
           errors.append(
               "Unable to get URL. Please make sure it's valid and try again."
           )
-  question = Question()
-  return render_template('index.html', number=question[0],category=question[1],air_date=question[2],question=question[3],value=question[4],round=question[5],show_number=question[6],answer=question[7])
-  return render_template('index.html')
+  question_and_answer = Question_And_Answer()
+  #question = str(escape(question_and_answer[3]))
+  question = str(question_and_answer[3])
+  return render_template('index.html', number=question_and_answer[0],category=question_and_answer[1],air_date=question_and_answer[2],question=question,value=question_and_answer[4],round=question_and_answer[5],show_number=question_and_answer[6],answer=question_and_answer[7])
+  #return render_template('index.html')
 
-def Question():
-  """Retruns Jeopardy Question and Question to index.html"""
+def Question_And_Answer():
+  """Returns Jeopardy Question and Answer to index.html"""
   number = str(rand)
   category=quiz['category'][rand]
   air_date =quiz['air_date'][rand]
@@ -47,7 +50,7 @@ def Question():
   round=quiz['round'][rand]
   show_number=quiz['show_number'][rand]
   answer=quiz['answer'][rand]
-  return number,category,question,air_date,value,round,show_number,answer
+  return number,category,air_date,question,value,round,show_number,answer
 
 def quizchoice(wager):
   """Enter in a wager and get a Jeopardy question"""
