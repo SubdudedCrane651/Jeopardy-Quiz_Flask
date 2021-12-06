@@ -1,10 +1,9 @@
 import requests
 import json
-import pandas as pd
 import random
-import os
+import pandas as pd
 from flask import Flask, request,render_template
-app = Flask(__name__)
+app = Flask('app')
 
 #The Jeopardy JSON file at my personal website
 #Where you will find other codes and languages
@@ -14,7 +13,9 @@ response = requests.get(url)
 data = json.loads(response.text)
 
 global count
+global rand
 count = len(data)
+rand = random.randrange(0,count)
 quiz = pd.DataFrame(data)
 
 # A decorator used to tell the application
@@ -23,7 +24,6 @@ quiz = pd.DataFrame(data)
 
 def index():
   errors = []
-  results = {}
   if request.method == "POST":
     #if request.form.get("Submit"):
       try:
@@ -35,6 +35,7 @@ def index():
           )
   question = Question()
   return render_template('index.html', number=question[0],category=question[1],air_date=question[2],question=question[3],value=question[4],round=question[5],show_number=question[6],answer=question[7])
+  return render_template('index.html')
 
 def Question():
   """Retruns Jeopardy Question and Question to index.html"""
@@ -48,7 +49,6 @@ def Question():
   answer=quiz['answer'][rand]
   return number,category,question,air_date,value,round,show_number,answer
 
-    
 def quizchoice(wager):
   """Enter in a wager and get a Jeopardy question"""
   
@@ -56,7 +56,7 @@ def quizchoice(wager):
 
   while go:
     global rand
-    rand = random.randrange(1,count) 
+    rand = random.randrange(0,count) 
     value = quiz['value'][rand]
     #removedollar = ''.join([value for i in range(len(value)) if i != 0])
     try:
@@ -90,7 +90,4 @@ def quizchoice(wager):
       if go:
        return
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0')
-
-Question()
+app.run(host='0.0.0.0')
