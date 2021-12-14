@@ -72,8 +72,9 @@ def quizchoice(wager):
     try:
       #This will check to see if the number is
       #an increment of 100
-      wager1 = int(wager)/10
-      if str(wager1).find('.0') ==-1:
+      #wager1 = int(wager)/10
+      #if str(wager1).find('.0') ==-1:
+      if int(wager)%10 > 0:
         quizchoice()
         if go:
          return  
