@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+<title>Jeopardy Quiz</title>
+<script type="text/javascript">
+    function showMessage(answer) {
+        alert(answer);
+    }
+</script>
+</head>
+<body>
+    <img src="static/Jeopardy_logo2.jpg" alt="Jeopardy Logo">
+    <br>
+    <h2>Enter an amount between 100 and 10000 in increments of 100</h2>
+    <form role="form" method='POST' action='/'>
+        <h2>What do you wager :<input type="text" name="wager" /></h2>
+        <p><input type="submit" name="Submit" value="Submit" /></p>
+    </form>
+    <table>
+        <tr>
+            <td>Number</td>
+            <td>{{ number }}</td>
+        </tr>
+        <tr>
+            <td>Category</td>
+            <td><h2>{{ category }}</h2></td>
+        </tr>
+        <tr>
+            <td>Air Date</td>
+            <td>{{ air_date }}</td>
+        </tr>
+        <tr>
+            <td>Question</td>
+            {% autoescape false %}
+            <td><h2>{{ question }}</h2></td>
+            {% endautoescape %}
+        </tr>
+        <tr>
+            <td>Value</td>
+            <td>{{ value }}</td>
+        </tr>
+        <tr>
+            <td>Round</td>
+            <td>{{ round }}</td>
+        </tr>
+        <tr>
+            <td>Show Number</td>
+            <td>{{ show_number }}</td>
+        </tr>
+    </table>
+    <p>Press Submit to have the answer</p>
+    <p><input type="button" id="btnShowMsg" value="Click Me!" onClick="showMessage('{{ answer }}')" /></p>
+    </form>
+
+
+</body>
+
+</html>
